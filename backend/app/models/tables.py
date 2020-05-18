@@ -16,19 +16,21 @@ class Funcionario(db.Model):
         return '<Funcionario %r>' % self.nome
 
 
-class Especializacao(db.Model):
-    __tablename__ = "especializacoes"
+class Curso(db.Model):
+    __tablename__ = "cursos"
 
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String, nullable=False)
+    codigo = db.Column(db.String)
     descricao = db.Column(db.String)
 
-    def __init__(self, titulo, descricao=''):
+    def __init__(self, titulo, codigo, descricao=''):
         self.titulo = titulo
+        self.codigo = codigo
         self.descricao = descricao
 
     def __repr__(self):
-        return '<Especializacao %r>' % self.titulo
+        return '<Curso %r>' % self.titulo
 
 
 class Capacitacao(db.Model):
@@ -36,8 +38,8 @@ class Capacitacao(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     funcionario_id = db.Column(db.Integer, db.ForeignKey('funcionarios.id'))
-    expecializacao_id = db.Column(
-        db.Integer, db.ForeignKey('especializacoes.id'))
+    curso_id = db.Column(
+        db.Integer, db.ForeignKey('curso.id'))
 
     def __repr__(self):
-        return '<Especializacao %r>' % self.titulo
+        return '<Capacitacao %r>' % self.titulo
