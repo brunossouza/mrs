@@ -1,5 +1,9 @@
 from app import db
 
+funcionario_curso = db.Table('funcionario_curso',
+    db.Column('funcionario_id', db.Integer, db.ForeignKey('funcionarios.id')),
+    db.Column('curso_id', db.Integer, db.ForeignKey('cursos.id'))
+)
 
 class Funcionario(db.Model):
     __tablename__ = "funcionarios"
@@ -8,9 +12,13 @@ class Funcionario(db.Model):
     nome = db.Column(db.String, nullable=False)
     matricula = db.Column(db.String, unique=True, nullable=False)
 
-    def __init__(self, nome, matricula):
+    cursos = db.relationship('Curso', secondary=funcionario_curso,
+        backref= db.backref('cursos', lazy='dynamic'))
+
+    def __init__(self, nome, matricula, cursos):
         self.nome = nome
         self.matricula = matricula
+        self.cursos = cursos
 
     def __repr__(self):
         return '<Funcionario %r>' % self.nome
@@ -30,18 +38,3 @@ class Curso(db.Model):
     def __repr__(self):
         return '<Curso %r>' % self.titulo
 
-
-class Capacitacao(db.Model):
-    __tablename__ = "capacitacao"
-
-    id = db.Column(db.Integer, primary_key=True)
-    funcionario_id = db.Column(db.Integer, db.ForeignKey('funcionarios.id'))
-    curso_id = db.Column(
-        db.Integer, db.ForeignKey('cursos.id'))
-
-    def __init__(self,funcionario_id,curso_id):
-        self.funcionario_id = funcionario_id
-        self.curso_id = curso_id
-
-    def __repr__(self):
-        return '<Capacitacao id={} funcionario_id={} cursos_id={} >'.format(self.id ,self.funcionario_id, self.curso_id)

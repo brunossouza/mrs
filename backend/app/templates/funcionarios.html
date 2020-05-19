@@ -31,16 +31,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Pedro de Alcântara João Carlos Leopoldo Salvador Bibiano Francisco</td>
-                    <td>8745965542</td>
-                    <td>NR-10</td>
-                </tr>
-                <tr>
-                    <td>Xavier de Paula Leocádio Miguel Gabriel Rafael Gonzaga</td>
-                    <td>8745965542</td>
-                    <td>NR-35</td>
-                </tr>
+                {% for funcionario in funcionariosList %}
+                    <tr>
+                        <td>{{funcionario.nome}}</td>
+                        <td>{{funcionario.matricula}}</td>
+                        <td>
+                            {% for c in funcionario.cursos %}
+                            {{c.titulo}}; 
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
@@ -52,17 +53,39 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="cadastrarModalLongTitle">Modal title</h5>
+            <h5 class="modal-title" id="cadastrarModalLongTitle">Cadastrar Funcionário</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+                <form method="POST" action="/index">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        <label for="nomeInput" class="col-form-label">Nome:</label>
+                        {{ form.nome(class="form-control", id="nomeInput") }}
+                        {% if form.errors.nome %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.errors.nome }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="matriculaInput" class="col-form-label">Matícula:</label>
+                        {{ form.matricula(class="form-control", id="matriculaInput") }}
+                        {% if form.errors.matricula %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.errors.matricula }}
+                            </div>
+                        {% endif %}
+                    </div>      
+                    <div class="form-group">
+                        <label for="selectCursos" class="col-form-label">Selecione os cursos:</label>
+                        {{ form.cursos(class="custom-select", multiple="true", id="selectCursos" ) }}
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
             </div>
         </div>
         </div>

@@ -1,14 +1,23 @@
-from flask import render_template, flash, redirect, url_for 
+from flask import render_template, redirect, url_for 
 from app import app, db
-from app.models.models import Curso
-from app.models.forms import CursosForm
+from app.models.models import Curso, Funcionario
+from app.models.forms import CursosForm, FuncionariosForm
 
-@app.route("/")
-@app.route("/index")
-@app.route("/funcionarios")
+
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/index", methods=['GET', 'POST'])
 def index():
-    return render_template("funcionarios.html")
-
+    form = FuncionariosForm()
+    form.cursos.choices = [(c.id, c.titulo) for c in Curso.query.order_by('titulo')]
+    if form.is_submitted():
+        cursos = [Curso.query.get(c) for c in form.cursos.data]
+        funcionario = Funcionario(form.nome.data, form.matricula.data, cursos)
+        db.session.add(funcionario)
+        db.session.commit()
+        return redirect(url_for('index'))
+    
+    funcionariosList = Funcionario.query.all()
+    return render_template("funcionarios.html", form=form, funcionariosList=funcionariosList)
 
 
 @app.route("/cursos", methods=['GET', 'POST'])
@@ -22,3 +31,4 @@ def cursos():
 
     cursosList = Curso.query.all()
     return render_template("cursos.html", form=form, cursosList=cursosList)
+
