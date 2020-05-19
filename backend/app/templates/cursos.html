@@ -1,120 +1,83 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends 'base.html' %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-    <title>MRS</title>
-  </head>
-  <body>
+{% block title %}{{ super() }} - Cursos{% endblock %}
 
-    <body>
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img
-                        src="https://www.mrs.com.br/wp-content/themes/mrsmobile/img/logo.png"
-                        alt="Logo"
-                        title="Logo"
-                        height="50"
-                    />
-                </a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+{% block content %}
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">
-                                Funcionários
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/cursos">Cursos</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <!-- <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                data-widget="control-sidebar"
-                                data-slide="true"
-                                href="#"
-                                role="button"
-                                style="color: red;"
-                            >
-                                <span>
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    sair
-                                </span>
-                            </a> -->
-                        </li>
-                    </ul>
+    <section class="container mt-3">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Cursos</h1>
+                </div>
+                <div class="col-sm-6">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#cadastrarModalCenter">
+                        Cadastrar
+                    </button>
                 </div>
             </div>
-        </nav>
+        </div>
+    </section>
 
-        <section class="container mt-3">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Cursos</h1>
+    <!-- Main content -->
+    <section class="container">
+        <table id="reservasTable" class="display">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Curso</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curso in cursosList %}
+                    <tr>
+                        <td>{{curso.id}}</td>
+                        <td>{{curso.titulo}}</td>
+                        <td>{{curso.descricao}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <!-- /.content -->
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cadastrarModalCenter" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="cadastrarModalCenterTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/cursos">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        <label for="tituloInput" class="col-form-label">Título:</label>
+                        {{ form.titulo(class="form-control", id="tituloInput") }}
+                        {% if form.errors.titulo %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.errors.titulo }}
+                            </div>
+                        {% endif %}
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="descricaoInput" class="col-form-label">Descrição:</label>
+                        {{ form.descricao(class="form-control", id="descricaoInput", type="textarea") }}
+                    </div>                    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
             </div>
-        </section>
-
-        <!-- Main content -->
-        <section class="container">
-            <table id="reservasTable" class="display">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Curso</th>
-                        <th>Descrição</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>NR-10</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>NR-35</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <!-- /.content -->
+        </div>
+        </div>
+    </div>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#reservasTable').DataTable();
-        });
-    </script>
-  </body>
-</html>
+    {% endblock %}

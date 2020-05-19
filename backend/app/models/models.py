@@ -21,12 +21,10 @@ class Curso(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String, nullable=False)
-    codigo = db.Column(db.String)
     descricao = db.Column(db.String)
 
-    def __init__(self, titulo, codigo, descricao=''):
+    def __init__(self, titulo, descricao=''):
         self.titulo = titulo
-        self.codigo = codigo
         self.descricao = descricao
 
     def __repr__(self):

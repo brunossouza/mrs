@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }} - Funcionários{% endblock %}
+
+{% block content %}
+
+    <section class="container mt-3">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Funcionarios</h1>
+                </div>
+                <div class="col-sm-6">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#cadastrarModalCenter">
+                        Cadastrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="container">
+        <table id="reservasTable" class="display">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Matrí­cula</th>
+                    <th>Cursos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pedro de Alcântara João Carlos Leopoldo Salvador Bibiano Francisco</td>
+                    <td>8745965542</td>
+                    <td>NR-10</td>
+                </tr>
+                <tr>
+                    <td>Xavier de Paula Leocádio Miguel Gabriel Rafael Gonzaga</td>
+                    <td>8745965542</td>
+                    <td>NR-35</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- /.content -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cadastrarModalCenter" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="cadastrarModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}
