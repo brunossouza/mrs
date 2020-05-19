@@ -7,3 +7,9 @@ from app.models import models
 @app.route("/index")
 def index():
     return render_template("index.html")
+
+
+
+@app.route("/cursos")
+def cursos():
+    return render_template("cursos.html")
