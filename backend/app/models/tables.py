@@ -39,7 +39,11 @@ class Capacitacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     funcionario_id = db.Column(db.Integer, db.ForeignKey('funcionarios.id'))
     curso_id = db.Column(
-        db.Integer, db.ForeignKey('curso.id'))
+        db.Integer, db.ForeignKey('cursos.id'))
+
+    def __init__(self,funcionario_id,curso_id):
+        self.funcionario_id = funcionario_id
+        self.curso_id = curso_id
 
     def __repr__(self):
-        return '<Capacitacao %r>' % self.titulo
+        return '<Capacitacao id={} funcionario_id={} cursos_id={} >'.format(self.id ,self.funcionario_id, self.curso_id)
