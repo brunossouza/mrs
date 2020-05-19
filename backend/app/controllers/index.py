@@ -1,10 +1,9 @@
+from flask import render_template
 from app import app, db
-from app.models import tables
+from app.models import models
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    me = tables.Capacitacao.query.get(1)
-    print(me)
-    return "running"
+    return render_template("index.html")

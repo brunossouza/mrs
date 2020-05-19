@@ -16,6 +16,6 @@ manager.add_command('db', MigrateCommand)
 
 
 from app.controllers import index,api
-from app.models import tables
+from app.models import models
 
 
