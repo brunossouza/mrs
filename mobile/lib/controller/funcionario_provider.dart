@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import '../models/funcionario.dart';
 
 class FuncionarioProvider with ChangeNotifier {
+  static const _BASE_URL = 'http://192.168.1.11:5000/api/search/';
+
   List<Funcionario> _funcionarios = [];
 
   List<Curso> _parseJsonToCursoList(data) {
@@ -42,7 +44,7 @@ class FuncionarioProvider with ChangeNotifier {
   }
 
   Future<void> search(search) async {
-    final url = 'http://192.168.1.11:5000/api/search/' + search;
+    final url = _BASE_URL + search;
     try {
       _funcionarios = [];
       final response = await http.get(url);
