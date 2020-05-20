@@ -1,6 +1,0 @@
-backend/venv/*
-backend/migrations/*
-
-__pycache__/*
-
-*.pyc
