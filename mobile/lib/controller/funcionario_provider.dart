@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../models/funcionario.dart';
 
 class FuncionarioProvider with ChangeNotifier {
-  static const _BASE_URL = 'http://192.168.1.11:5000/api/search/';
+  static const _BASE_URL = 'https://mrs-search.herokuapp.com/api/search/';
 
   List<Funcionario> _funcionarios = [];
 
