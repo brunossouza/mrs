@@ -49,8 +49,15 @@ class _HomePageState extends State<HomePage> {
             Container(
               width: double.infinity,
               child: RaisedButton(
+                color: Colors.blue,
                 onPressed: _search,
-                child: Text('Pesquisar'),
+                child: Text(
+                  'Pesquisar',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             _funcionariosList.isEmpty
