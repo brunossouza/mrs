@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mrs/controller/funcionario_provider.dart';
+import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -8,13 +10,22 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MRS',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: FuncionarioProvider(),
+        ),
+      ],
+      child: Consumer<FuncionarioProvider>(
+        builder: (cxt, funconarios, _) => MaterialApp(
+          title: 'MRS',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: HomePage(),
+        ),
       ),
-      home: HomePage(),
     );
   }
 }
