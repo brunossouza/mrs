@@ -48,9 +48,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Image.asset(
-          'assets/images/logo.png',
-          height: 45.0,
+        title: Hero(
+          tag: 'logo-mrs',
+          child: Image.asset(
+            'assets/images/logo.png',
+            height: 45.0,
+          ),
         ),
       ),
       body: Container(
@@ -109,7 +112,10 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () => Navigator.of(context).pushNamed(
                                       FuncionarioDetails.routeName,
                                       arguments: f),
-                                  leading: Image.network(f.avatarUrl),
+                                  leading: Hero(
+                                    tag: f.nome,
+                                    child: Image.network(f.avatarUrl),
+                                  ),
                                   title: Text(f.nome),
                                   trailing: Icon(Icons.arrow_forward_ios),
                                 ),

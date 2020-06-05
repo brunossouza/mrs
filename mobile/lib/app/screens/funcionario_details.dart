@@ -64,7 +64,10 @@ class FuncionarioDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(funcionario.avatarUrl),
+              Hero(
+                tag: funcionario.nome,
+                child: Image.network(funcionario.avatarUrl),
+              ),
               SizedBox(
                 height: 10.0,
               ),
