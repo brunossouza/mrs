@@ -7,7 +7,6 @@ from app.utils import verificar, converter
 @app.route("/api/funcionarios", methods=['GET'])
 def api():
     funcionarios = converter.converte_funcionarios_map(Funcionario.query.all())
-
     return jsonify(funcionarios)
 
 

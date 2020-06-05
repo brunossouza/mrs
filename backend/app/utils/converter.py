@@ -5,7 +5,7 @@ def converter(funcionarioMap, funcionarioObjeto):
     cursos = [{'id': x.id, 'titulo': x.titulo,
                'descricao': x.descricao} for x in funcionarioObjeto.cursos]
     funcionarioMap.append(
-        {'nome': funcionarioObjeto.nome, 'matricula': funcionarioObjeto.matricula, 'cursos': cursos})
+        {'nome': funcionarioObjeto.nome, 'matricula': funcionarioObjeto.matricula, 'avatar_url': funcionarioObjeto.avatar_url, 'cursos': cursos})
 
 
 def converte_funcionarios_map(funcionarios):

@@ -20,9 +20,10 @@ class Funcionario(db.Model):
     cursos = db.relationship('Curso', secondary=funcionario_curso,
                              backref=db.backref('cursos', lazy='dynamic'))
 
-    def __init__(self, nome, matricula, cursos):
+    def __init__(self, nome, matricula, avatar_url, cursos):
         self.nome = nome
         self.matricula = matricula
+        self.avatar_url = avatar_url
         self.cursos = cursos
 
     def __repr__(self):

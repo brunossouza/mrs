@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mrs/app/models/funcionario.dart';
+
+import '../models/funcionario.dart';
+import './funcionario_details.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/home";
@@ -12,10 +14,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController textFieldcontroller = TextEditingController();
+  List<Funcionario> funcionarios = [];
 
-  Future<List<Funcionario>> searchFuncionario() async {
-    var response =
-        await http.get("https://mrs-search.herokuapp.com/api/funcionarios");
+  bool pesquisando = false;
+
+  void searchFuncionario() async {
+    setState(() {
+      pesquisando = true;
+      funcionarios = [];
+    });
+
+    var response = await http.get(
+        "https://mrs-search.herokuapp.com/api/search/" +
+            textFieldcontroller.text);
 
     var jsonData = json.decode(response.body);
 
@@ -25,7 +36,11 @@ class _HomePageState extends State<HomePage> {
       list.add(funcionario);
     }
 
-    return list;
+    print(list[0].avatarUrl);
+
+    setState(() {
+      funcionarios = list;
+    });
   }
 
   @override
@@ -54,11 +69,7 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               child: RaisedButton(
                 color: Colors.blue,
-                onPressed: () async {
-                  //TODO: implement method
-                  List<Funcionario> l = await searchFuncionario();
-                  print(l.length);
-                },
+                onPressed: searchFuncionario,
                 child: Text(
                   'Pesquisar',
                   style: TextStyle(
@@ -68,6 +79,44 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            if (!pesquisando)
+              Expanded(
+                child: Container(
+                  child: Center(
+                    child: Text("Sem resultados"),
+                  ),
+                ),
+              ),
+            if (pesquisando)
+              funcionarios.isEmpty
+                  ? Expanded(
+                      child: Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                            itemCount: funcionarios.length,
+                            itemBuilder: (cxt, ind) {
+                              Funcionario f = funcionarios[ind];
+                              print(f.avatarUrl);
+                              return Card(
+                                elevation: 5,
+                                child: ListTile(
+                                  onTap: () => Navigator.of(context).pushNamed(
+                                      FuncionarioDetails.routeName,
+                                      arguments: f),
+                                  leading: Image.network(f.avatarUrl),
+                                  title: Text(f.nome),
+                                  trailing: Icon(Icons.arrow_forward_ios),
+                                ),
+                              );
+                            }),
+                      ),
+                    )
           ],
         ),
       ),

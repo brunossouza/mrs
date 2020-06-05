@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mrs/app/screens/funcionario_details.dart';
 import './screens/home_screen.dart';
 
 class App extends StatelessWidget {
@@ -13,6 +14,7 @@ class App extends StatelessWidget {
       initialRoute: HomePage.routeName,
       routes: {
         HomePage.routeName: (cxt) => HomePage(),
+        FuncionarioDetails.routeName: (cxt) => FuncionarioDetails(),
       },
     );
   }
